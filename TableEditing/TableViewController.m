@@ -23,6 +23,7 @@
     [super viewDidLoad];
     
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.navigationItem.title = @"Students";
     
     self.groups = [NSMutableArray array];
     for (int i = 1; i < arc4random() % 15 + 10; i++) {
@@ -33,7 +34,6 @@
         NSMutableArray *array = [NSMutableArray array];
         for (int j = 1; j < arc4random() % 5 + 5; j++) {
             [array addObject:[Student randomStudent]];
-           
         }
         
         group.students = array;

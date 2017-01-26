@@ -5,17 +5,17 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Students-->
+        <!--Table View Controller-->
         <scene sceneID="gfm-Of-LnD">
             <objects>
                 <tableViewController id="uUn-MK-PXY" customClass="TableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="40" sectionHeaderHeight="18" sectionFooterHeight="18" id="jhf-3X-Dy3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" textLabel="jsq-2W-01i" detailTextLabel="wOh-Yi-7Nv" rowHeight="40" style="IBUITableViewCellStyleValue1" id="712-hK-sMb">
-                                <rect key="frame" x="0.0" y="114" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="50" width="600" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="712-hK-sMb" id="pXw-rM-iiW">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
@@ -37,6 +37,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -44,7 +45,7 @@
                             <outlet property="delegate" destination="uUn-MK-PXY" id="Gfj-GH-qj7"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Students" id="Bsx-1d-KVU"/>
+                    <navigationItem key="navigationItem" id="Bsx-1d-KVU"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7sG-1i-4JG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -54,9 +55,14 @@
         <scene sceneID="upU-vO-zHf">
             <objects>
                 <navigationController id="HNJ-8J-lSr" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lte-KP-erG">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="Lte-KP-erG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.23529411764705882" green="0.58823529411764708" blue="0.62745098039215685" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="uUn-MK-PXY" kind="relationship" relationship="rootViewController" id="d28-M9-DqD"/>
