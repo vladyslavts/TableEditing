@@ -22,11 +22,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.navigationItem.title = @"Students";
     
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSection:)];
+    self.navigationItem.rightBarButtonItem = addButton;
+    
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
+    self.navigationItem.leftBarButtonItem = editButton;
+    
+    
     self.groups = [NSMutableArray array];
-    for (int i = 1; i < arc4random() % 15 + 10; i++) {
+    NSInteger gropsCount = arc4random() % 5 + 5;
+    for (int i = gropsCount; i >= 1; i--) {
         
         Group *group = [Group new];
         group.name = [NSString stringWithFormat:@"Group #%d", i];
@@ -47,6 +54,50 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Button Action
+
+- (void)addSection:(UIBarButtonItem *)sender {
+    
+    Group *group = [Group new];
+    group.name = [NSString stringWithFormat:@"Group #%d", [self.groups count] + 1];
+    
+    group.students = @[[Student randomStudent],
+                       [Student randomStudent]];
+   
+    [self.groups insertObject:group atIndex:0];
+    
+    [self.tableView beginUpdates];
+    
+    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
+    [self.tableView insertSections:indexSet withRowAnimation:UITableViewRowAnimationLeft];
+    
+    [self.tableView endUpdates];
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       
+        if ([[UIApplication sharedApplication] isIgnoringInteractionEvents]) {
+        
+            [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+        }
+    });
+}
+
+- (void)editAction:(UIBarButtonItem *)sender {
+    
+    BOOL isEditing = self.tableView.editing;
+    
+    [self.tableView setEditing:!isEditing animated:YES];
+    UIBarButtonSystemItem item = UIBarButtonSystemItemEdit;
+    
+    if (self.tableView.editing) {
+        item = UIBarButtonSystemItemDone;
+    }
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:item target:self action:@selector(editAction:)];
+    self.navigationItem.leftBarButtonItem = editButton;
 }
 
 #pragma mark - Table view data source
@@ -93,17 +144,24 @@
 }
 */
 
-/*
+
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    Group *sourceGroup = [self.groups objectAtIndex:indexPath.section];
+    Student *selectedStudent = [sourceGroup.students objectAtIndex:indexPath.row];
+    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:sourceGroup.students];
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        [tempArray removeObject:selectedStudent];
+        sourceGroup.students = tempArray;
+        
+        [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        [tableView endUpdates];
+    }
 }
-*/
+
 
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
@@ -137,6 +195,15 @@
 }
 
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return NO;
+}
+/*
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}*/
 /*
 #pragma mark - Navigation
 
