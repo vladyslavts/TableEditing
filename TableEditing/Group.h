@@ -11,6 +11,6 @@
 @interface Group : NSObject
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSMutableArray *students;
+@property (strong, nonatomic) NSArray *students;
 
 @end
